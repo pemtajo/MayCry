@@ -14,9 +14,23 @@ from optparse import OptionParser
 import sys
 sys.path.append("../..")
 
-if len(sys.argv) < 3:
-    print ("usage : maycry inputfile password")
+
+parser = OptionParser("usage: %prog [options] inputfile password")
+parser.add_option("-i", "--input", dest="filename",
+                       default="all", type="string",
+                       help="specify filename to encrypt")
+parser.add_option("-p", "--password", dest="password", help="password for lock the arquive")
+
+(options, args) = parser.parse_args()
+if len(args) != 2:
+    parser.error("incorrect number of arguments")
     raise SystemExit
+
+filename = args[0]
+password = args[1]
+
+print(options)
+print(args)
 
 
 charUseless=' ' #blank space
@@ -65,8 +79,6 @@ class CypherText(Text):
         super(CypherText, self).__init__()
 
 
-
-
 class Crypto(object):
     """docstring for Crypto."""
     SIZE_BLOCK=16
@@ -92,16 +104,14 @@ class Crypto(object):
             self.textDecrypt.addBlock(self.encrypter.decrypt(block))
 
     def __str__(self):
-        view=""
-        view+="PlainText:  "+ str(self.plain)+"\n"
+        view="PlainText:  "+ str(self.plain)+"\n"
         view+="CypherText: "+ str(self.cypher)+"\n"
         view+="DecrytText: "+ str(self.textDecrypt)
 
         return view
 
 
-filename =sys.argv[1]
-password= sys.argv[2]
+
 
 
 crypto= Crypto(filename, password)
