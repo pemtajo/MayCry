@@ -13,14 +13,20 @@ class Text(object):
         self.refresh()
 
     def addBlock(self,block):
-        self.blocks.append(block)
+        self._blocks.append(block)
 
     def refresh(self):
-        self.blocks=[]
+        self._blocks=[]
+
+    def getBlocks(self):
+        return self._blocks
+
+    def setBlocks(self,b):
+        self._blocks=b
 
     def __str__(self):
         tmp=""
-        for b in self.blocks:
+        for b in self.getBlocks():
             tmp+=b
         return tmp+"|"
 
@@ -44,7 +50,7 @@ class PlainText(Text):
 
     def _splitForSizeBlock(self):
         self.arg+=(self.sizeBlock-(len(self.arg)%self.sizeBlock))*charUseless
-        self.blocks=[self.arg[i: i + self.sizeBlock] for i in range(0, len(self.arg), self.sizeBlock)]
+        self.setBlocks([self.arg[i: i + self.sizeBlock] for i in range(0, len(self.arg), self.sizeBlock)])
 
 
 class CypherText(Text):
@@ -69,12 +75,12 @@ class Crypto(object):
 
     def _encrypt(self):
         self.cypher.refresh()
-        for block in self.plain.blocks:
+        for block in self.plain.getBlocks():
             self.cypher.addBlock(self.encrypter.encrypt(block))
 
     def _decrypt(self):
         self.textDecrypt.refresh()
-        for block in self.cypher.blocks:
+        for block in self.cypher.getBlocks():
             self.textDecrypt.addBlock(self.encrypter.decrypt(block))
 
     def __str__(self):

@@ -36,8 +36,7 @@ class TestText(unittest.TestCase):
         text.addBlock('PEDRO')
         text.addBlock('TESTE')
         self.assertEquals(text.blocks, ['PEDRO', 'TESTE'])
-        s='PEDROTESTE'
-        self.assertEquals(text, s)
+        self.assertEquals(str(text), 'PEDROTESTE|')
         
 
 
