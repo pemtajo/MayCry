@@ -10,7 +10,7 @@
 from Crypto.Hash import SHA256
 from Crypto.Cipher import AES
 from optparse import OptionParser
-from classes import Crypto
+from lib import Crypto
 
 import sys
 sys.path.append("../..")

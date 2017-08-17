@@ -30,11 +30,6 @@ class Text(object):
             tmp+=b
         return tmp+"|"
 
-    def __repr__(self):
-        tmp=""
-        for b in self.blocks:
-            tmp+=b
-        return tmp
 
 class PlainText(Text):
     """docstring for PlainText."""
